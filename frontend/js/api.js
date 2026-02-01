@@ -1,5 +1,20 @@
 const URL_BASE = 'https://dummyjson.com';
-const BACKEND_URL = 'http://localhost:3000'; // Added for the new backend service
+const BACKEND_URL = 'http://localhost:3000'; // Note: In production, this should be the public IP
+
+/**
+ * Obtiene información dinámica del backend PHP.
+ * @returns {Promise<Object>} Promesa con los datos del backend
+ */
+async function getBackendInfoAPI() {
+    try {
+        const resp = await fetch(BACKEND_URL + '/index.php');
+        if (!resp.ok) throw new Error('Error backend');
+        return await resp.json();
+    } catch (e) {
+        console.error("No se pudo conectar con el backend PHP:", e);
+        return null;
+    }
+}
 
 
 /**
@@ -31,7 +46,7 @@ async function loginAPI(username, password) {
  * @returns {Promise<Array>} Promesa con el array de categorías
  */
 async function getCategoriesAPI() {
-    const resp = await fetch(URL_BASE + '/products/categories');
+    const resp = await fetch(BACKEND_URL + '/index.php?action=categories');
     return await resp.json();
 }
 

@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCategories();
     generateCaptcha();
     loadProducts();
+    displayBackendPromo();
 
     window.addEventListener('scroll', () => {
         const home = document.getElementById('view-home');
@@ -456,4 +457,22 @@ function mostrarNotificacion(msg, tipo) {
             background: tipo === 'error' ? "red" : "green"
         }
     }).showToast();
+}
+
+/**
+ * Obtiene la promo del backend PHP y la muestra en un banner.
+ */
+async function displayBackendPromo() {
+    const data = await getBackendInfoAPI();
+    if (data && data.promo_message) {
+        const header = document.querySelector('.header');
+        const banner = document.createElement('div');
+        banner.style.background = '#ffcc00';
+        banner.style.color = '#000';
+        banner.style.textAlign = 'center';
+        banner.style.padding = '10px';
+        banner.style.fontWeight = 'bold';
+        banner.textContent = data.promo_message;
+        header.parentNode.insertBefore(banner, header.nextSibling);
+    }
 }
