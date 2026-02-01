@@ -1,5 +1,5 @@
 const URL_BASE = 'https://dummyjson.com';
-const BACKEND_URL = 'http://localhost:3000'; // Note: In production, this should be the public IP
+const BACKEND_URL = `http://${window.location.hostname}:3000`; // Dynamic URL for the PHP backend
 
 /**
  * Obtiene información dinámica del backend PHP.
